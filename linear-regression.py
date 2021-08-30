@@ -68,7 +68,7 @@ x_train, x_test, y_train, y_test = train_test_split(x_std, y_log, test_size=0.2,
 
 
 regressor = LinearRegression()
-regressor.fit(X_train, Y_train)
+regressor.fit(x_train, y_train)
 
 y_pred_train = regressor.predict(x_train)
 y_pred_test = regressor.predict(x_test)
