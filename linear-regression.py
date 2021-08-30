@@ -2,17 +2,22 @@ import numpy as np
 import pandas as pd
 import matplotlib.pylab as plt
 import seaborn as sns
+from sklearn import preprocessing
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+
 from sklearn.metrics import r2_score
 from sklearn.datasets import load_boston
 dataset = load_boston()
 sns.set()
 
-f = pd.DataFrame(dataset.data)
-f.columns = dataset.feature_names
-f["PRICES"] = dataset.target
+
+df = pd.DataFrame(dataset.data)
+df.columns = dataset.feature_names
+df["PRICES"] = dataset.target
 
 # Show the relation, "PRICES" vs each variable
-f.plot(x="TAX", y="PRICES", style="o")
+df.plot(x="TAX", y="PRICES", style="o")
 plt.ylabel("PRICES")
 plt.show()
 
@@ -48,32 +53,29 @@ FeaturesName = [\
               'LSTAT',\
               ]
 
-X = f[FeaturesName]
-Y = f[TargetName]
+x = df[FeaturesName]
+y = df[TargetName]
 ##-- Logarithmic scaling
-Y_log = np.log(Y)
+y_log = np.log(y)
 
 # Standardize the Variables
-from sklearn import preprocessing
 sscaler = preprocessing.StandardScaler()
-sscaler.fit(X)
-X_std = sscaler.transform(X)
+sscaler.fit(x)
+x_std = sscaler.transform(x)
 
 
-from sklearn.model_selection import train_test_split
-X_train, X_test, Y_train, Y_test = train_test_split(X_std, Y_log, test_size=0.2, random_state=99)
+x_train, x_test, y_train, y_test = train_test_split(x_std, y_log, test_size=0.2, random_state=0)
 
 
-from sklearn.linear_model import LinearRegression
 regressor = LinearRegression()
 regressor.fit(X_train, Y_train)
 
-y_pred_train = regressor.predict(X_train)
-y_pred_test = regressor.predict(X_test)
+y_pred_train = regressor.predict(x_train)
+y_pred_test = regressor.predict(x_test)
 
 # Inverse logarithmic transformation if necessary
 y_pred_train, y_pred_test = np.exp(y_pred_train), np.exp(y_pred_test)
-Y_train, Y_test = np.exp(Y_train), np.exp(Y_test)
+y_train, y_test = np.exp(y_train), np.exp(y_test)
 
 
 plt.figure(figsize=(5, 5), dpi=100)
@@ -81,13 +83,13 @@ plt.xlabel("PRICES")
 plt.ylabel("Predicted PRICES")
 plt.xlim(0, 60)
 plt.ylim(0, 60)
-plt.scatter(Y_train, y_pred_train, lw=1, color="r", label="train data")
-plt.scatter(Y_test, y_pred_test, lw=1, color="b", label="test data")
+plt.scatter(y_train, y_pred_train, lw=1, color="r", label="train data")
+plt.scatter(y_test, y_pred_test, lw=1, color="b", label="test data")
 plt.legend()
 plt.show()
 
 
-R2 = r2_score(Y_test, y_pred_test)
+R2 = r2_score(y_test, y_pred_test)
 print(f'R2 score: {R2:.2f}')
 
 
