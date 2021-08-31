@@ -6,7 +6,7 @@
 ## Clone the repository
 
 ```console
-$ git clone git@github.com:caron14/BayesianOptimization.git 
+$ git clone git@github.com:caron14/LinearRegression_BostonHousePrices.git
 ```
 
 ## Setting up the Environment using Docker
@@ -56,6 +56,6 @@ $ python linear-regression.py
 ## Dependencies
 * Numpy
 * Pandas
-* Scikit-learn
+* scikit-learn
 * Matplotlib
 * seaborn
