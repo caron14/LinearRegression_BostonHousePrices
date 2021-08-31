@@ -1,19 +1,20 @@
 # Linear regression on the Boston house prices dataset
 
 
-## Quick Start
+# Quick Start
 
-### Clone the repository
+## Clone the repository
 
 ```console
 $ git clone git@github.com:caron14/BayesianOptimization.git 
 ```
 
-### Setting up the Environment using Docker
+## Setting up the Environment using Docker
 
 The docker image can be created from Dockerfile easily.
 You can easily build the same environment by specifying the python image and the version of the external library in the Dockerfile.
 
+The contents of Dockerfile are below.
 ```Dockerfile
 FROM python:3.9.2
 
@@ -28,13 +29,13 @@ RUN pip install numpy==1.20.1 \
 WORKDIR /work
 ```
 
-To create the docker image, we execute the following command. 
+To create the docker image, execute the following command in the directory where the Dockerfile exists.
 
 ```console
 $ docker build .
 ```
 
-After creating the docker image, we build the docker container from the docker image.
+Build the docker container from the docker image. The "-v" option is used to synchronize the local directory with the directory in the docker container.
 
 ```console
 $ docker run -it -v ~/**/LinearRegression_BostonHousePrices:/work <Image ID> bash
@@ -46,7 +47,7 @@ It should be noted here that you can confirm "<Image ID>" by the following docke
 $ docker images
 ```
 
-### Execution
+## Execution
 
 ```console
 $ python linear-regression.py
